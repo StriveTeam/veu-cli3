@@ -1,8 +1,10 @@
+const Home = () => import('@/views/Home.vue')
+
 export default [
   {
     path: '/',
     name: 'home',
-    component: () => import(/* webpackChunkName: "about" */ '@/views/Home.vue')
+    component: Home
   },
   {
     path: '/about',
