@@ -1,8 +1,8 @@
 <template>
   <div class="home">
     <s-table
-      :columns="consumeColumns"
-      :data="consumeData"
+      :columns="columns"
+      :data="tableData"
       ref="clist"
       height="auto">
     </s-table>
@@ -11,52 +11,91 @@
 
 <script>
 // @ is an alias to /src
+import { getTableData } from '@/api/data';
 export default {
   name: 'home',
   components: {},
   data () {
+    const _this = this;
     return {
-      consumeColumns: [
+      columns: [
         {
-          label: '桌台号',
-          prop: 'seatsnums',
-          width: '100'
+          label: '台号',
+          prop: 'seatsnums'
         },
         {
-          label: '支付时间',
-          prop: 'create_time',
-          width: '160'
+          label: '开台时间',
+          prop: 'open_time'
         },
         {
-          label: '业务类型',
-          prop: 'type_name',
-          width: '120'
+          label: '闭台时间',
+          prop: 'close_time'
         },
         {
-          label: '卡号',
-          prop: 'income_type_user_num',
-          width: '140'
+          label: '总金额',
+          prop: 'pay_sum_money',
+          render (h, { row }) {
+            return (<div class="allRight">{row.pay_sum_money}</div>);
+          },
+          sort: true
         },
         {
-          label: '持卡人',
-          prop: 'sale_name',
-          width: '100'
+          label: '销售',
+          prop: 'sales_name',
+          oprate: 'filter',
+          filteData: {
+            search: true,
+            mutiple: true,
+            get filters () {
+              // return _this.$store.state.order.saleslist;
+              return [];
+            }
+          }
         },
         {
-          label: '宴请客户',
-          prop: 'username',
-          width: '180'
+          label: '客户',
+          render (h, { row }) {
+            return (
+              <div>
+                <div>
+                  {row.username}
+                </div>
+                <div>
+                  {row.mobile_hid}
+                </div>
+              </div>
+            );
+          }
         },
         {
-          label: '宴请金额',
-          width: '120',
+          label: '收银人',
+          prop: 'cashier_names'
+        },
+        {
+          label: '操作',
           render (h, ctx) {
-            return (<div class="allRight" style = "" > {ctx.row.money} </div>)
+            return (
+              <div class="commo-detail-button"
+                onClick={
+                  () => {
+                    _this.$router.push(`/order/orderinfo/${ctx.row.seats_log_id}`);
+                  }
+                }>
+                查看详情
+              </div>
+            );
           }
         }
       ],
-      consumeData: []
-    }
-  }
-}
+      tableData: []
+    };
+  },
+  created () {
+    getTableData().then(res => {
+      console.log(res);
+      this.tableData = res.data.list;
+    });
+  },
+  methods: {}
+};
 </script>

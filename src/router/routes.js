@@ -1,4 +1,4 @@
-const Home = () => import('@/views/Home.vue')
+const Home = () => import('@/views/Home.vue');
 
 export default [
   {
@@ -14,4 +14,4 @@ export default [
     // which is lazy-loaded when the route is visited.
     component: () => import(/* webpackChunkName: "about" */ '@/views/About.vue')
   }
-]
+];

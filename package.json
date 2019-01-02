@@ -37,7 +37,14 @@
       "plugin:vue/essential",
       "@vue/standard"
     ],
-    "rules": {},
+    "rules": {
+      "strict": 2,
+      "semi": [2, "always"],
+      "no-plusplus": 0,
+      "radix": 2,
+      "eqeqeq": 2,
+      "no-var": 0
+    },
     "parserOptions": {
       "parser": "babel-eslint"
     }

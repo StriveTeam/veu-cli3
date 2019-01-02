@@ -1,8 +1,8 @@
-const path = require('path')
+const path = require('path');
 
 const resolve = dir => {
-  return path.join(__dirname, dir)
-}
+  return path.join(__dirname, dir);
+};
 
 module.exports = {
   baseUrl: process.env.NODE_ENV === 'production'
@@ -33,8 +33,8 @@ module.exports = {
   chainWebpack: config => {
     config.resolve.alias
       .set('@', resolve('src')) // key,value自行定义，比如.set('@@', resolve('src/components'))
-      .set('_c', resolve('src/components'))
+      .set('_c', resolve('src/components'));
   },
   // 打包时不生成.map文件，如果你不需要生产环境的 source map，可以将其设置为 false 以加速生产环境构建。
   productionSourceMap: false
-}
+};
