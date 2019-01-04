@@ -1,7 +1,311 @@
+<style lang="scss">
+  @import '../assets/abstract';
+  .ctable{
+    width:100%;
+    background: white;
+    .cell{
+      display: inline-block;
+      >div{
+        display: inline-block;
+      }
+      .filter{
+        position: relative;
+      }
+    }
+    .sort{
+      width:15px;
+      height:40px;
+      position: relative;
+      margin-left:5px;
+      i{
+        cursor: pointer;
+        border-left:6px solid transparent;
+        border-right: 6px solid transparent;
+        position: absolute;
+        left:0;
+        display: block;
+      }
+      i:first-child{
+        &.active{
+          border-bottom: 6px solid #48576a;
+        }
+        top:13px;
+        border-bottom: 6px solid #97a8be;
+      }
+      i:last-child{
+        bottom:13px;
+        border-top: 6px solid #97a8be;
+        &.active{
+          border-top:6px solid #48576a;
+        }
+      }
+    }
+    table{
+      width:100%;
+      line-height: 40px;
+      text-align: center;
+      &.bill{
+        background: #EDF6FD;
+        th{
+          background: #EDF6FD;
+          border-bottom: 1px solid #C0D8F0;
+          color:#4C545B;
+        }
+        td{
+          color:#666666 ;
+          border-bottom:1px solid white;
+        }
+      }
+      &.info{
+        background: #EDF6FD;
+        th{
+          background: #EDF6FD;
+          border-bottom: 1px solid rgba(65, 155, 249, .5);
+        }
+        td{
+          border-bottom:1px solid rgba(193, 218, 247, .5);
+          &.check{
+            border-bottom: none;
+          }
+        }
+      }
+      tr:last-child td{
+        border-bottom: none;
+      }
+      &[falign=left]{
+        text-align: left;
+      }
+      &[falign=right]{
+        text-align: right;
+      }
+      td{
+        font-size: 14px;
+        line-height: 20px;
+        position: relative;
+        padding: 10px;
+      }
+      th{
+        font-size: 14px;
+        padding:0 10px;
+        height:40px;
+        i{
+          transition: .3s;
+        }
+        .el-icon-arrow-down.active{
+          transform: rotate(180deg);
+        }
+      }
+      &.def{
+        th{
+          .cell{
+            position: relative;
+            &:before{
+              @include default-pseudo;
+              width:8px;
+              height:8px;
+              left:-12px;
+              top:16px;
+              border-radius: 5px;
+              background: #F5BB80;
+            }
+            &.none{
+              &:before{
+                display: none;
+              }
+            }
+          }
+        }
+      }
+    }
+    .s-body{
+      overflow: auto;
+      tr:nth-child(2n-1) {
+        background-color: #EDF6FD;
+      }
+      tr:nth-child(2n) {
+        background-color: $c-back;
+      }
+      tr{
+        transition: .3s;
+        .hover{
+          visibility: hidden;
+        }
+      }
+      tr:hover{
+        background-color:#dfe6ec;
+        .hover{
+          visibility: visible;
+        }
+      }
+      td.disabled{
+        color:#999999;
+      }
+      td.abated{
+        color:#DF5D5D;
+      }
+      td.gray{
+        color:#807d7d;
+      }
+      td.disuse{
+        color:#b8b5b5 !important;
+      }
+      td.disuse div.cell{
+         text-decoration:line-through;
+      }
+      td .handle{
+        color:#479CF3;
+        margin-right:10px;
+        cursor:pointer;
+      }
+      td.red{
+         color:#DF5D5D;
+      }
+      td .bingdelete{
+        color:#479CF3;
+        cursor:pointer;
+      }
+      td .tdelete{
+        color:#DF5D5D;
+        cursor:pointer;
+      }
+    }
+  }
+  .component-filter{
+    top: 100%;
+    left:0;
+  }
+  /*
+   * 用于筛选窗口
+   */
+  .table-filter{
+    width:200px;
+    transition: .3s;
+    .search-box{
+      padding:10px 0;
+      width:100%;
+      border-bottom:1px solid #B3CFF4;
+      div{
+        width:160px;
+        margin:auto;
+        height:30px;
+        line-height: 30px;
+        position: relative;
+        background: #EDF6FD;
+        padding-left:35px;
+        border-radius: 15px;
+        .search{
+          position: absolute;
+          width:22px;
+          height:22px;
+          left:7px;
+          top:4px;
+        }
+        input{
+          width:100%;
+          line-height: 25px;
+          background: none;
+          border:none;
+          font-size:14px;
+          color:#8BB8F1;
+        }
+      }
+    }
+    .list{
+      ul{
+        text-align: left;
+        max-height: 220px;
+        overflow: auto;
+      }
+      li{
+        padding-left: 20px;
+        font-size: 14px;
+        .el-checkbox{
+          color:#3f4954;
+        }
+        .el-checkbox__inner{
+          transform: scale(.9);
+        }
+        > div{
+          border-bottom: 1px solid #E2ECF9;
+        }
+        &:last-child div{
+          border:none;
+        }
+        &.full-select{
+          .el-checkbox{
+            color:$c-blue;
+          }
+          border-bottom: 1px solid #E2ECF9;
+          padding-left:10px;
+        }
+        &.radio{
+          cursor: pointer;
+          transition: background .3s;
+          position: relative;
+          padding-right:10px;
+          &:hover{
+            background: #eef1f6;
+          }
+          i{
+            position: absolute;
+            right:7px;top:50%;
+            font-size:12px;
+            line-height: 12px;
+            margin-top:-6px;
+          }
+        }
+      }
+      &.radio{
+        li{
+          border: none;
+          border-bottom: 1px solid #E2ECF9;
+          > div{
+            border-bottom: none;
+          }
+        }
+      }
+      .oprate{
+        font-size: 16px;
+        color:$c-blue;
+        border-top:1px solid #B3CFF4;
+        div{
+          cursor: pointer;
+          padding:0 20px;
+        }
+      }
+    }
+  }
+  .filter-num{
+    display: inline-block;
+    width:30px;
+  }
+  .select{
+    color:$c-blue;
+  }
+  table[vertical=top]{
+    td{
+      vertical-align: top;
+    }
+  }
+  table[vertical=bottom]{
+    td{
+      vertical-align: bottom;
+    }
+  }
+  .ctable-nomore{
+    padding: 10px;
+    font-size: 14px;
+    text-align: center;
+    color:gray;
+    &.bill,info{
+      background: #EDF6FD;
+    }
+  }
+</style>
 <template>
   <div class="ctable">
     <!--表头-->
-    <table :class="[type]" :falign="align" cellspacing="0" cellpadding="0">
+    <table style="width:100%" :class="[type]" :falign="align" cellspacing="0" cellpadding="0">
       <s-colgroup :columns="columns" :width="tableWidth"></s-colgroup>
       <thead>
         <tr>
@@ -13,6 +317,69 @@
             :align="th.align"
             :key="th.prop"
           >
+          <div class="cell" :class="{none:th.prop === 'table-check' || !th.label}">
+              <!--无操作-->
+              <template v-if="!th.oprate">
+                <div v-if="th.prop === 'table-check'">
+                  <el-checkbox v-model="th.check" @change="columnSelectAll"></el-checkbox>
+                </div>
+                <div v-else>
+                  {{th.label}}
+                </div>
+              </template>
+              <!-- 搜索筛选 -->
+              <div v-if="th.oprate === 'filter'" class="filter">
+                <div @click="opShow(th,i)" :class="getSelectStatus(th.filteData.filters)">
+                  {{th.label}} <i class="el-icon-arrow-down" :class="{active:th.opshow}"></i>  <span class="filter-num" v-if="th.filteData.mutiple && getSelectNum(th)">{{getSelectNum(th)}}</span>
+                </div>
+                <transition name="el-zoom-in-top">
+                  <div class="table-filter dialog-bg comment-filter" v-if="th.opshow" :style="{right:i === fcolumns.length - 1?0:''}">
+                    <div class="search-box" v-if="th.filteData.search">
+                      <div>
+                        <i class="search"></i>
+                        <input type="text" placeholder="搜索" v-model="th.searchKey">
+                      </div>
+                    </div>
+                    <div v-if="th.filteData.mutiple" class="list">
+                      <ul>
+                        <li class="full-select">
+                          <el-checkbox label="全选" @change="doSelectAll($event,th)"></el-checkbox>
+                        </li>
+                        <li v-for="item in th.flist" :key="item.id">
+                          <div>
+                            <el-checkbox :label="item.name" v-model="item.select"></el-checkbox>
+                          </div>
+                        </li>
+                      </ul>
+                      <div class="oprate flex type3">
+                        <div @click="filterChange(th,true)">确定</div>
+                        <div @click="filterChange(th,false)">重置</div>
+                      </div>
+                    </div>
+                    <div v-else class="list radio">
+                      <ul>
+                        <li
+                          v-for="item in th.flist"
+                          class="radio"
+                          :key="item.id"
+                          :class="{select:item.select}"
+                          @click="radioChange(th,item.id)">
+                          <div>
+                            {{item.name}}
+                            <i class="el-icon-check" v-if="item.select"></i>
+                          </div>
+                        </li>
+                      </ul>
+                    </div>
+                  </div>
+                </transition>
+              </div>
+              <!--带排序-->
+              <div class="sort clear" v-if="th.sort">
+                <i :class="{active:(sortColumn === th.prop && sortStatus === 'ascending')}" @click="setSort(th.prop,'ascending')"></i>
+                <i :class="{active:(sortColumn === th.prop && sortStatus === 'descending')}" @click="setSort(th.prop,'descending')"></i>
+              </div>
+            </div>
           </th>
         </tr>
       </thead>
@@ -28,39 +395,8 @@
         cellpadding="0"
       >
         <s-colgroup :columns="columns" :width="tableWidth"></s-colgroup>
-        <!-- 可拖动排序列表 -->
-        <template v-if="typeof draggable !== 'object'">
-          <draggable
-            v-model="data"
-            :value="data"
-            @input="val => $emit('update:data',val)"
-            :element="'tbody'"
-            :options="{animation: 200,disabled: !draggable}"
-          >
-            <tr
-              v-for="(row,i) in data"
-              :key="row.id"
-              @click="rowClick($event,row,i)"
-              :style="{cursor:draggable?'move':'default'}"
-            >
-              <td
-                v-for="(item,ci) in columns"
-                :align="item.align"
-                :class="getClass(item,row,ci)"
-                :key="item.prop"
-              >
-                <template v-if="item.prop === 'table-check'">
-                  <el-checkbox v-model="checkArr[i]" @change="selected($event,row)"></el-checkbox>
-                </template>
-                <template v-else>
-                  <t-render :row="row" :index="i" :col="item"></t-render>
-                </template>
-              </td>
-            </tr>
-          </draggable>
-        </template>
         <!-- 正常列表 -->
-        <template v-else>
+        <template>
           <tbody>
             <tr v-for="(row,i) in data" :key="i" @click="rowClick($event,row,i)">
               <td
@@ -69,20 +405,7 @@
                 :class="getClass(item,row,ci)"
                 :key="item.prop"
               >
-                <template v-if="item.prop === 'table-check'">
-                  <el-checkbox v-model="checkArr[i]" @change="selected($event,row)"></el-checkbox>
-                </template>
-                <template v-else-if="item.prop === 'banquet'">
-                  <el-checkbox v-if="row.selected" disabled v-model="row.checked">已选过</el-checkbox>
-                  <el-checkbox v-model="row.checked" v-else @change="singlecheckd(row)"></el-checkbox>
-                </template>
-                <template v-else-if="item.prop === 'is_use'">
-                  <el-checkbox
-                    v-model="row.is_use"
-                    @change="selectman(row.income_type_user_id,row.is_use)"
-                  ></el-checkbox>
-                </template>
-                <template v-else>
+                <template>
                   <t-render :row="row" :index="i" :col="item"></t-render>
                 </template>
               </td>
@@ -507,7 +830,7 @@ export default {
       }
     },
     resize () {
-      // this.tableWidth = $(this.$el).width()
+      this.tableWidth = $(this.$el).width();
     }
   },
   // 表头信息初始化

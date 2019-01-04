@@ -3,6 +3,7 @@ import App from './App.vue';
 import router from './router/index';
 import store from './store/index';
 import './plugins/element.js';
+import './assets/zepto';
 import MyPlugin from './myplugin';
 
 Vue.use(MyPlugin);
