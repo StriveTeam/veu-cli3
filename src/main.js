@@ -5,6 +5,7 @@ import store from './store/index';
 import './plugins/element.js';
 import './assets/zepto';
 import MyPlugin from './myplugin';
+import './assets/css/common.scss';
 
 Vue.use(MyPlugin);
 Vue.config.productionTip = false;

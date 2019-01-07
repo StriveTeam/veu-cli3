@@ -1,5 +1,5 @@
 <style lang="scss">
-  @import '../assets/abstract';
+  @import '../assets/css/abstract';
   .ctable{
     width:100%;
     background: white;
@@ -99,15 +99,15 @@
         th{
           .cell{
             position: relative;
-            &:before{
-              @include default-pseudo;
-              width:8px;
-              height:8px;
-              left:-12px;
-              top:16px;
-              border-radius: 5px;
-              background: #F5BB80;
-            }
+            // &:before{
+            //   @include default-pseudo;
+            //   width:8px;
+            //   height:8px;
+            //   left:-12px;
+            //   top:16px;
+            //   border-radius: 5px;
+            //   background: #F5BB80;
+            // }
             &.none{
               &:before{
                 display: none;
@@ -170,16 +170,19 @@
       }
     }
   }
-  .component-filter{
-    top: 100%;
-    left:0;
-  }
   /*
    * 用于筛选窗口
    */
   .table-filter{
     width:200px;
     transition: .3s;
+    &.component-filter{
+      position: absolute;
+      z-index: 11;
+      background: #ffffff;
+      top: 100%;
+      left:0;
+    };
     .search-box{
       padding:10px 0;
       width:100%;
@@ -830,7 +833,7 @@ export default {
       }
     },
     resize () {
-      this.tableWidth = $(this.$el).width();
+      this.tableWidth = this.$el.clientWidth;
     }
   },
   // 表头信息初始化
@@ -839,13 +842,13 @@ export default {
     this.forMateData();
   },
   destroyed () {
-    // $(window).unbind('click', this.closeFilter);
-    // $(window).on('unbind', this.resize);
+    window.removeEventListener('click', this.closeFilter);
+    window.removeEventListener('resize', this.resize);
   },
   mounted () {
-    // this.tableWidth = $(this.$el).width()
-    // $(window).on('click', this.closeFilter)
-    // $(window).on('resize', this.resize)
+    this.tableWidth = this.$el.clientWidth;
+    window.addEventListener('click', this.closeFilter);
+    window.addEventListener('resize', this.resize);
   }
 };
 </script>
