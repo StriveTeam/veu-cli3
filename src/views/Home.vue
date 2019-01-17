@@ -8,7 +8,6 @@
     </s-table>
   </div>
 </template>
-
 <script>
 // @ is an alias to /src
 import { getTableData } from '@/api/data';
@@ -96,6 +95,7 @@ export default {
       this.tableData = res.data.list;
     });
   },
-  methods: {}
+  methods: {},
+  mounted () {}
 };
 </script>
