@@ -1,7 +1,12 @@
 <template>
   <div class="jsonParse">
     <div class="jsonBox">
-      <el-input type="textarea" class="source" v-model="source" @change="checkJson"></el-input>
+      <div class="source el-textarea">
+        <div class="textRows">
+          <div v-for="(item, index) in textRows" :key="index">{{item}}</div>
+        </div>
+        <textarea autocomplete="off" class="el-textarea__inner" v-model="source" @change="checkJson"></textarea>
+      </div>
     </div>
     <div class="resultBox">
       <pre id="result" class="result el-textarea__inner" :class="{'pass': checkFlag === true, 'fail': !checkFlag}">{{result}}</pre>
@@ -19,7 +24,8 @@ export default {
     return {
       source: '',
       result: '',
-      checkFlag: -1
+      checkFlag: -1,
+      textRows: []
     };
   },
   created () {},
@@ -44,7 +50,7 @@ export default {
     source: _.debounce(
       function () {
         this.checkJson();
-      }, 1000)
+      }, 600)
   }
 };
 </script>
@@ -60,17 +66,20 @@ export default {
     }
   }
   .result {
-    height: 90px;
+    display: none;
   }
   .pass {
+    height: 40px;
     color: #42b941;
     background: #ddfbdd;
     border: 1px solid #258625;
+    display: block;
   }
   .fail {
     height: 90px;
     color: #930;
     border: 1px solid #c50606;
+    display: block;
   }
 }
 textarea { width: 100%; }
