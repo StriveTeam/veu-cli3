@@ -4,7 +4,7 @@
       <el-input type="textarea" class="source" v-model="source" @change="checkJson"></el-input>
     </div>
     <div class="resultBox">
-      <el-input type="textarea" class="result" v-model="result" :class="{'pass': checkFlag, 'fail': !checkFlag}"></el-input>
+      <pre id="result" class="result el-textarea__inner" :class="{'pass': checkFlag === true, 'fail': !checkFlag}">{{result}}</pre>
     </div>
   </div>
 </template>
@@ -19,7 +19,7 @@ export default {
     return {
       source: '',
       result: '',
-      checkFlag: false
+      checkFlag: -1
     };
   },
   created () {},
@@ -29,12 +29,13 @@ export default {
         const checkFlagText = jsonlint.parse(this.source);
         if (checkFlagText) {
           this.source = JSON.stringify(checkFlagText, null, '  ');
-          this.result = 'Json is valid!';
+          document.getElementById('result').innerHTML = 'Json is valid!';
           this.checkFlag = true;
         }
       } catch (e) {
         this.checkFlag = false;
-        this.result = e;
+        document.getElementById('result').innerHTML = e;
+        // this.result = e;
       }
     }
   },
@@ -58,20 +59,18 @@ export default {
       height: 400px;
     }
   }
+  .result {
+    height: 90px;
+  }
   .pass {
-    .el-textarea__inner{
-      height: 90px;
-      color: #42b941;
-      background: #ddfbdd;
-      border: 1px solid #258625;
-    }
+    color: #42b941;
+    background: #ddfbdd;
+    border: 1px solid #258625;
   }
   .fail {
-    .el-textarea__inner{
-      height: 90px;
-      color: #930;
-      border: 1px solid #c50606;
-    }
+    height: 90px;
+    color: #930;
+    border: 1px solid #c50606;
   }
 }
 textarea { width: 100%; }
