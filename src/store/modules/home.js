@@ -1,6 +1,13 @@
 export default {
-  state: {},
-  mutations: {},
+  state: {
+    user: null,
+    goodsDetail: null
+  },
+  mutations: {
+    user (state, payload) {
+      state.user = payload;
+    }
+  },
   getters: {},
   actions: {}
 };

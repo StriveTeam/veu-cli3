@@ -21,12 +21,10 @@ module.exports = {
     },
     proxy: {
       '/api': {
-        target: '<url>',
-        ws: true,
+        target: 'http://localhost:9999',
+        secure: false,
         changeOrigin: true
-      },
-      '/foo': {
-        target: '<other_url>'
+        // pathRewrite: {'^/api': ''},
       }
     }
   },

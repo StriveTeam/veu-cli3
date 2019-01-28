@@ -38,11 +38,10 @@ class HttpRequest {
     instance.interceptors.response.use(res => {
       this.destroy(url);
       // console.log(res);
-      const { status } = res;
-      if (!(res.status >= 200 && res.status < 300) || res.data.code !== 0) {
+      if (!(res.status >= 200 && res.status < 300) || res.data.code !== 200) {
         console.log(res); // 统一处理错误信息提示等
       }
-      const { data } = res.data;
+      const { data, status } = res;
       return { data, status };
     }, error => {
       this.destroy(url);

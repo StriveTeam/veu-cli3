@@ -9,7 +9,7 @@
       </div>
     </div>
     <div class="resultBox">
-      <pre id="result" class="result el-textarea__inner" :class="{'pass': checkFlag === true, 'fail': !checkFlag}">{{result}}</pre>
+      <pre id="result" class="res el-textarea__inner" :class="{'result': checkFlag === 1,'pass': checkFlag === 2, 'fail': checkFlag === 3}" >{{result}}</pre>
     </div>
   </div>
 </template>
@@ -19,12 +19,18 @@ import jsonlint from '@/libs/jsonlint';
 import _ from 'lodash';
 export default {
   name: 'jsonparse',
+  props: {
+    jsonshow: {
+      type: Boolean,
+      default: false
+    }
+  },
   components: {},
   data () {
     return {
       source: '',
       result: '',
-      checkFlag: -1,
+      checkFlag: 1,
       textRows: []
     };
   },
@@ -36,10 +42,10 @@ export default {
         if (checkFlagText) {
           this.source = JSON.stringify(checkFlagText, null, '  ');
           document.getElementById('result').innerHTML = 'Json is valid!';
-          this.checkFlag = true;
+          this.checkFlag = 2;
         }
       } catch (e) {
-        this.checkFlag = false;
+        this.checkFlag = 3;
         document.getElementById('result').innerHTML = e;
         // this.result = e;
       }
@@ -49,38 +55,52 @@ export default {
   watch: {
     source: _.debounce(
       function () {
-        this.checkJson();
-      }, 600)
+        if (this.source === '') {
+          this.checkFlag = 1;
+          document.getElementById('result').innerHTML = '';
+        } else {
+          this.checkJson();
+        }
+      }, 600),
+    jsonshow (val) {
+      if (val === true) {
+        this.source = '';
+        this.checkFlag = 1;
+        document.getElementById('result').innerHTML = '';// console.log(document.getElementById('#result').innerText)
+      }
+    }
   }
 };
 </script>
 <style lang="scss">
-.jsonParse{
-  line-height: 30px;
-  .jsonBox, .resultBox{
-    padding: 10px 20px
-  }
-  .source{
-    .el-textarea__inner{
-      height: 400px;
+  .jsonParse {
+    line-height: 30px;
+    .jsonBox, .resultBox {
+      padding: 10px 20px
+    }
+    .source {
+      .el-textarea__inner {
+        height: 400px;
+      }
+    }
+    .res {
+      height: 90px;
+      border: 1px solid #ddd;
+      /*display: none;*/
+    }
+    .pass {
+      height: 90px;
+      color: #42b941;
+      background: #ddfbdd;
+      border: 1px solid #258625;
+      display: block;
+    }
+    .fail {
+      height: 90px;
+      color: #930;
+      border: 1px solid #c50606;
+      display: block;
     }
   }
-  .result {
-    display: none;
-  }
-  .pass {
-    height: 40px;
-    color: #42b941;
-    background: #ddfbdd;
-    border: 1px solid #258625;
-    display: block;
-  }
-  .fail {
-    height: 90px;
-    color: #930;
-    border: 1px solid #c50606;
-    display: block;
-  }
-}
-textarea { width: 100%; }
+  textarea { width: 100%; }
 </style>

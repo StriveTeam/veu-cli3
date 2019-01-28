@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <el-container class="mainCon">
+    <el-container v-if="token" class="mainCon">
       <el-header>Header</el-header>
       <el-container>
         <el-aside width="200px">Aside</el-aside>
@@ -8,15 +8,22 @@
           <el-main>
             <router-view></router-view>
           </el-main>
-          <!-- <el-footer>Footer</el-footer> -->
         </el-container>
       </el-container>
+    </el-container>
+    <el-container v-else class="mainCon">
+      <router-view></router-view>
     </el-container>
   </div>
 </template>
 <script>
 export default {
-  name: 'App'
+  name: 'App',
+  data () {
+    return {
+      token: localStorage.getItem('user')
+    };
+  }
 };
 </script>
 <style lang="scss">
