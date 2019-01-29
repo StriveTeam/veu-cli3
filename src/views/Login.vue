@@ -1,5 +1,5 @@
 <template>
-  <el-form :model="loginForm" :rules="rules" ref="loginForm" label-width="100px" class="login-form">
+  <el-form :model="loginForm" :rules="rules" ref="loginForm" label-width="60px" class="login-form">
     <el-form-item label="账号" prop="user_name">
         <el-input type="text" v-model="loginForm.user_name" auto-complete="off"></el-input>
     </el-form-item>
@@ -38,11 +38,14 @@ export default {
       this.$refs[formName].validate((valid) => {
         if (valid) {
           login(this.loginForm).then(res => {
-            // localStorage.setItem('user', res.data.user);
-            this.$store.commit('user', res.data.user);
-            this.$message.success('登录成功');
+            if (res.code === 200) {
+              this.$store.commit('user', res.data.user);
+              this.$message.success('登录成功');
+              this.$router.push('/');
+            } else {
+              this.$message.error(res.data.msg);
+            }
           });
-          // this.$router.push('/');
         }
       });
     },
@@ -60,6 +63,6 @@ export default {
 </script>
 <style lang="scss">
 .login-form {
-  margin: 50px auto;
+  margin: 100px auto;
 }
 </style>

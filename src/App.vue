@@ -1,7 +1,6 @@
 <template>
   <div id="app">
-    <el-container v-if="token" class="mainCon">
-      <el-header>Header</el-header>
+    <el-container v-if="login" class="mainCon">
       <el-container>
         <el-aside width="200px">Aside</el-aside>
         <el-container>
@@ -11,7 +10,7 @@
         </el-container>
       </el-container>
     </el-container>
-    <el-container v-else class="mainCon">
+    <el-container v-else class="mainCon" style="background: #f5f5f5">
       <router-view></router-view>
     </el-container>
   </div>
@@ -21,8 +20,19 @@ export default {
   name: 'App',
   data () {
     return {
-      token: localStorage.getItem('user')
+      login: false
     };
+  },
+  watch: {
+    '$route' () {
+      const routName = this.$route.name;
+      console.log(routName);
+      if (routName === 'login') {
+        this.login = false;
+      } else {
+        this.login = true;
+      }
+    }
   }
 };
 </script>

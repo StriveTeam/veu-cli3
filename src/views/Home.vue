@@ -23,7 +23,7 @@
 </template>
 <script>
 // @ is an alias to /src
-import { getTableData } from '@/api/data';
+import { getTableData } from '@/api/goods';
 export default {
   name: 'home',
   components: {},

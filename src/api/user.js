@@ -7,3 +7,11 @@ export const login = (val) => {
     data: val
   });
 };
+
+export const userAdd = (val) => {
+  return axios.request({
+    url: '/api/user/add',
+    method: 'post',
+    data: val
+  });
+};

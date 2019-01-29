@@ -6,3 +6,10 @@ export const getTableData = () => {
     method: 'get'
   });
 };
+
+export const getGoodsList = () => {
+  return axios.request({
+    url: '/api/goods/list',
+    method: 'get'
+  });
+};

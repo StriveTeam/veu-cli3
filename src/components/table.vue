@@ -619,36 +619,11 @@ export default {
     getClass (col, row, colindex) {
       var cla = [];
       cla.push(`col-${this._uid}-${colindex}`);
-      // if(col.prop) {
-      //   cla.push(col.prop)
-      // }
       if (this.disabled) {
         if (this.disabled.value === row[this.disabled.key]) {
           cla.push('disabled');
         }
       }
-      // 针对卡片管理
-      if (this.disdelete) {
-        if (this.disdelete.value === row[this.disdelete.key]) {
-          cla.push('disuse');
-        }
-      }
-      if (this.disdelete) {
-        if (this.disdelete.value === row[this.disdelete.key]) {
-          cla.push('disuse');
-        }
-      }
-      if (this.disred) {
-        if (this.disred.value === row[this.disred.key]) {
-          cla.push('red');
-        }
-      }
-      if (this.disgray) {
-        if (this.disgray.value === row[this.disgray.key]) {
-          cla.push('gray');
-        }
-      }
-      // 针对卡片管理结束
       if (col.prop === 'table-check') {
         cla.push('check');
       }
