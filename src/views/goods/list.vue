@@ -1,20 +1,26 @@
 <template>
+<div>
   <s-table
     :columns="columns"
     :data="tableData"
     ref="clist"
     height="auto">
   </s-table>
+  <Edit v-if="flag" :goodId="current" />
+</div>
 </template>
 <script>
 // @ is an alias to /src
 import { getGoodsList } from '@/api/goods';
+import Edit from './edit';
 export default {
   name: 'goods_list',
-  components: {},
+  components: { Edit },
   data () {
+    const _this = this;
     return {
-      val: '',
+      current: '',
+      flag: false,
       columns: [
         {
           label: 'name',
@@ -41,10 +47,10 @@ export default {
         },
         {
           label: '操作',
-          render (h, ctx) {
+          render (h, { row }) {
             return (
               <div class="operate">
-                <span>修改</span> | <span>查看</span>
+                <span onClick={ () => { _this.showModal(row); } }>修改</span> | <span>查看</span>
               </div>
             );
           }
@@ -55,11 +61,16 @@ export default {
   },
   created () {
     getGoodsList().then(res => {
-      console.log(res);
       this.tableData = res.data.goods;
     });
   },
-  methods: {},
+  methods: {
+    showModal (val) {
+      console.log(val);
+      this.current = val.id;
+      this.flag = true;
+    }
+  },
   mounted () {
     this.val = 'aaaa';
   }

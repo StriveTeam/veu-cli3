@@ -13,3 +13,10 @@ export const getGoodsList = () => {
     method: 'get'
   });
 };
+
+export const getDetail = () => {
+  return axios.request({
+    url: '/api/goods/detail',
+    method: 'get'
+  });
+};
