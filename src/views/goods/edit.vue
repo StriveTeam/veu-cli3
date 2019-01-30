@@ -82,7 +82,7 @@ export default {
   },
   async created () {
     if (this.goodId) {
-      const res = await getDetail(this.goodId);
+      const res = await getDetail({ id: this.goodId });
       console.log(res);
     }
   },

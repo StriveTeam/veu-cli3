@@ -14,9 +14,10 @@ export const getGoodsList = () => {
   });
 };
 
-export const getDetail = () => {
+export const getDetail = (val) => {
   return axios.request({
-    url: '/api/goods/detail',
-    method: 'get'
+    url: `/api/goods/detail`,
+    method: 'post',
+    data: val
   });
 };
